@@ -5,10 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
 @Data
+@AllArgsConstructor
 @Entity
 public class Empleado {
     
@@ -17,7 +19,19 @@ public class Empleado {
     private String nombre;
     private String email;
     private String edad;
-    private LocalDate fechaCumpleanos;
+    private LocalDate fechaCumpleanios;
+    private double salarioBase;
 
-    // Getters y Setters
+    public Empleado(String nombre, String email, String edad, LocalDate fecha){
+    
+        this.nombre=nombre;
+        this.email=email;
+        this.edad=edad;
+        this.fechaCumpleanios=fecha;
+
+    }
+
+    public Empleado(){
+
+    }
 }

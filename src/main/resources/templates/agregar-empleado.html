@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <h2>Agregar Empleado</h2>
-    <form action="#" th:action="@{/guardarEmpleado}" th:object="${empleado}" method="post">
+    <form action="#" th:action="@{/empleados/guardar-empleado}" th:object="${empleado}" method="post">
         <div class="form-group">
             <label for="nombre">Nombre:</label>
             <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
@@ -18,6 +18,14 @@
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" class="form-control" id="email" th:field="*{email}">
+        </div>
+        <div class="form-group">
+            <label for="fechaCumpleanios">Fecha de Nacimiento:</label>
+            <input type="date" class="form-control" id="fechaCumpleanios" th:field="*{fechaCumpleanios}">
+        </div>
+        <div class="form-group">
+            <label for="edad">Edad:</label>
+            <input type="text" class="form-control" id="edad" th:field="*{edad}">
         </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>

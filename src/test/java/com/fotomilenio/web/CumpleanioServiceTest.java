@@ -44,12 +44,12 @@ public class CumpleanioServiceTest {
         Empleado empleado1 = new Empleado();
         empleado1.setNombre("Victor Monsalvo");
         empleado1.setEmail("vicmo.v2@gmail.com");
-        empleado1.setFechaCumpleanos(LocalDate.of(1990, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
+        empleado1.setFechaCumpleanios(LocalDate.of(1990, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
 
         Empleado empleado2 = new Empleado();
         empleado2.setNombre("Manuel Suarez");
         empleado2.setEmail("victormanuelms@ufps.edu.co");
-        empleado2.setFechaCumpleanos(today);
+        empleado2.setFechaCumpleanios(today);
 
         //Listo los empleados 
         List<Empleado> empleados = Arrays.asList(empleado1, empleado2);

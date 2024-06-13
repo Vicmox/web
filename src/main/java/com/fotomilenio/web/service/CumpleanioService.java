@@ -28,8 +28,8 @@ public class CumpleanioService {
     
             for (Empleado empleado : empleados) {
                 // Verificar si la fecha de cumpleaños coincide con la fecha actual
-                if (empleado.getFechaCumpleanos().getMonth() == today.getMonth() &&
-                    empleado.getFechaCumpleanos().getDayOfMonth() == today.getDayOfMonth()) {
+                if (empleado.getFechaCumpleanios().getMonth() == today.getMonth() &&
+                    empleado.getFechaCumpleanios().getDayOfMonth() == today.getDayOfMonth()) {
                     
                     // Enviar felicitación por correo electrónico
                     emailService.sendBirthdayGreetings(empleado.getEmail(), empleado.getNombre());;

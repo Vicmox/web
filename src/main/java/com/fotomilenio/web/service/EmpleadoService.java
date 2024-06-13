@@ -21,6 +21,11 @@ public class EmpleadoService {
         return empleadoRepository.findAll();
     }
 
+    public List<Empleado> saveAllEmpleados(List<Empleado> empleado){
+
+        return empleadoRepository.saveAll(empleado);
+    }
+
     @Transactional
     public void guardarEmpleado(Empleado empleado) {
         empleadoRepository.save(empleado);
@@ -28,10 +33,6 @@ public class EmpleadoService {
 
     public Optional<Empleado> getEmpleadoById(Long id) {
         return empleadoRepository.findById(id);
-    }
-
-    public Empleado saveEmpleado(Empleado empleado) {
-        return empleadoRepository.save(empleado);
     }
 
     public void deleteEmpleado(Long id) {

@@ -1,31 +1,73 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Listado de Empleados</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-          crossorigin="anonymous">
-</head>
-<body>
-<div class="container">
-    <h2>Listado de Empleados</h2>
-    <table class="table">
+    <link rel="stylesheet" type="text/css" href="/css/listado-empleados.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2 style="padding: 12px">Listado de Empleados</h2>
+      <table class="table">
         <thead>
-        <tr>
-            <th>ID</th>
+          <tr>
             <th>Nombre</th>
             <th>Email</th>
-        </tr>
+            <th>Eliminar</th>
+          </tr>
         </thead>
         <tbody>
-        <tr th:each="empleado : ${empleados}">
-            <td th:text="${empleado.id}"></td>
+          <!-- Iterar sobre la lista de empleados -->
+          <tr th:each="empleado : ${empleados}">
             <td th:text="${empleado.nombre}"></td>
             <td th:text="${empleado.email}"></td>
-        </tr>
+            <td class="button-container">
+              <!-- Botón de eliminar con JavaScript -->
+              <button class="btn-eliminar" data-id="${empleado.id}">
+                Eliminar
+              </button>
+            </td>
+          </tr>
         </tbody>
-    </table>
-</div>
-</body>
+      </table>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Seleccionar todos los botones de eliminar por su clase
+        var btnEliminar = document.querySelectorAll(".btn-eliminar");
+
+        // Iterar sobre cada botón y agregar un listener de evento clic
+        btnEliminar.forEach(function (btn) {
+          btn.addEventListener("click", function (event) {
+            var empleadoId = event.target.getAttribute("data-id"); // Obtener el id del atributo data-id del botón clicado
+            eliminarEmpleado(empleadoId); // Llamar a la función eliminarEmpleado con el id obtenido
+          });
+        });
+      });
+
+      function eliminarEmpleado(id) {
+        fetch("/empleados/" + id, {
+          method: "DELETE",
+        })
+          .then(function (response) {
+            if (response.ok) {
+              // Eliminación exitosa, actualizar la interfaz (opcional)
+              location.reload(); // Recargar la página para reflejar los cambios
+            } else {
+              console.error("Error al eliminar empleado:", response.statusText);
+            }
+          })
+          .catch(function (error) {
+            console.error("Error al eliminar empleado:", error);
+          });
+      }
+    </script>
+  </body>
 </html>

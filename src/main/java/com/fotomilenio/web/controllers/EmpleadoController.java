@@ -3,17 +3,15 @@ package com.fotomilenio.web.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fotomilenio.web.entity.Empleado;
 import com.fotomilenio.web.service.EmpleadoService;
@@ -50,16 +48,10 @@ public class EmpleadoController {
     }
 
     //Guardar un empleado
-    @PostMapping("/guardarEmpleado")
-    public String guardarEmpleado(@Validated @ModelAttribute("empleado") Empleado empleado, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            // Aquí puedes manejar los errores de validación, por ejemplo, regresar al formulario con los errores
-            return "formulario-empleado";
-        }
-
-        // Lógica para guardar el empleado en la base de datos
+    @PostMapping("/guardar-empleado")
+    public String guardarEmpleado(@ModelAttribute Empleado empleado) {
         empleadoService.guardarEmpleado(empleado);
-        return "redirect:/empleados"; // Redirigir a la lista de empleados después de guardar
+        return "redirect:/empleados"; // Redirige al listado de empleados después de guardar
     }
 
     //Controller vista formulario editar
@@ -71,10 +63,10 @@ public class EmpleadoController {
         return "formulario-empleado"; // Nombre de la vista Thymeleaf
     }
 
-    //Elminar un empleado
-    @DeleteMapping("/{id}/eliminar")
-    public String eliminarEmpleado(@PathVariable("id") Long id) {
-        empleadoService.deleteEmpleado(id);
-        return "redirect:/empleados"; // Redirige a la lista de empleados
-    }
+      // Método para eliminar un empleado por su ID
+      @DeleteMapping("/{id}")
+      public ResponseEntity<Void> eliminarEmpleado(@PathVariable Long id) {
+          empleadoService.deleteEmpleado(id);
+          return ResponseEntity.noContent().build();
+      }
 }
