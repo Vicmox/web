@@ -14,6 +14,8 @@ import com.fotomilenio.web.entity.HorasExtra;
 @Repository
 public interface  HorasExtraRepository extends JpaRepository<HorasExtra, Long>{
     
+    /* 
     @Query("SELECT h FROM HorasExtra h WHERE h.empleado = :empleado AND h.fecha = :fecha")
     List<HorasExtra> findByEmpleadoAndFecha(@Param("empleado") Empleado empleado, @Param("fecha") LocalDate fecha);
-}
+*/
+    }

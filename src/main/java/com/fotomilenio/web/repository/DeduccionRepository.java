@@ -14,7 +14,8 @@ import com.fotomilenio.web.entity.Empleado;
 
 @Repository
 public interface  DeduccionRepository extends JpaRepository<Deduccion, Long>{
-    
-    @Query("SELECT h FROM HorasExtra h WHERE h.empleado = :empleado AND h.fecha = :fecha")
+
+    /*     @Query("SELECT h FROM HorasExtra h WHERE h.empleado = :empleado AND h.fecha = :fecha")
     List<Deduccion> findByEmpleadoAndFecha(@Param("empleado") Empleado empleado, @Param("fecha") LocalDate fecha);
-}
+*/
+    }

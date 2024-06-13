@@ -17,7 +17,7 @@ import com.fotomilenio.web.entity.Empleado;
 import com.fotomilenio.web.service.EmpleadoService;
 
 @Controller
-@RequestMapping("/empleados")
+@RequestMapping("/empleados/vista")
 public class EmpleadoController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class EmpleadoController {
         model.addAttribute("empleados", empleados);
         return "listado-empleados"; // Nombre de la vista Thymeleaf
     }
-
+/* 
     //Listar un unico empleado x ID 
     @GetMapping("/{id}")
     public String obtenerEmpleadoPorId(@PathVariable("id") Long id, Model model) {
@@ -38,7 +38,7 @@ public class EmpleadoController {
                 .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado con ID: " + id));
         model.addAttribute("empleado", empleado);
         return "detalle-empleado"; // Nombre de la vista Thymeleaf
-    }
+    }*/
 
     //Controller de la vista de agregar empleado
     @GetMapping("/nuevo")

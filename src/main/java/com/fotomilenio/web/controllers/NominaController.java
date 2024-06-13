@@ -12,7 +12,7 @@ import com.fotomilenio.web.service.NominaService;
 
 @RestController
 public class NominaController {
-
+/* 
     @Autowired
     private NominaService nominaService;
 
@@ -20,5 +20,5 @@ public class NominaController {
     public double calcularSalario(@RequestParam Empleado empleado, @RequestParam LocalDate fecha) {
         return nominaService.calcularSalario(empleado, fecha);
     }
-    
+*/
 }
