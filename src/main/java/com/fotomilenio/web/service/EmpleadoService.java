@@ -30,9 +30,8 @@ public class EmpleadoService {
         return empleadoRepository.saveAll(empleado);
     }
 
-    @Transactional
-    public void guardarEmpleado(Empleado empleado) {
-        empleadoRepository.save(empleado);
+    public Empleado guardarEmpleado(Empleado empleado) {
+        return empleadoRepository.save(empleado);
     }
 
 

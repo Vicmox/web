@@ -20,10 +20,10 @@ import com.fotomilenio.web.service.EmpleadoService;
 @RequestMapping("/empleados")
 public class EmpeladoRestController {
 
-@Autowired
+    @Autowired
     private EmpleadoService empleadoService;
 
-    // Listar todos los empleados 
+    // Listar todos los empleados
     @GetMapping
     public List<Empleado> listarEmpleados() {
         return empleadoService.getAllEmpleados();

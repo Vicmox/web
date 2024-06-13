@@ -38,6 +38,7 @@ public class NominaService {
     @Autowired
     private DeduccionRepository deduccionRepository;
 
+    /* 
     @Transactional
     public Nomina calcularNomina(Long empleadoId, LocalDate fechaPago) {
         Empleado empleado = empleadoRepository.findById(empleadoId)
@@ -67,9 +68,9 @@ public class NominaService {
         nomina.setFechaPago(fechaPago);
 
         return nominaRepository.save(nomina);
-    }
+    }*/
 
-    public double calcularSalario(Empleado empleado, LocalDate fecha) {
+    /*public double calcularSalario(Empleado empleado, LocalDate fecha) {
         double salarioTotal = 0.0;
         List<HorasExtra> horasExtras = horasExtraRepository.findByEmpleadoAndFecha(empleado, fecha);
 
@@ -78,5 +79,5 @@ public class NominaService {
         }
 
         return salarioTotal;
-    }
+    }*/
 }
