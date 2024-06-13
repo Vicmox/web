@@ -1,13 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8"/>
     <title>Página de Inicio</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #ff0000 !important;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255,255,255,.55);
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ff0000;
+        }
+
+        .jumbotron {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #ff0000;
+            padding: 2rem 2rem;
+        }
+
+        .jumbotron h1 {
+            color: #ff0000;
+        }
+
+        .btn-primary {
+            background-color: #ff0000;
+            border-color: #ff0000;
+        }
+
+        .btn-primary:hover {
+            background-color: #cc0000;
+            border-color: #cc0000;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .footer span {
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
+    <!-- Encabezado -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Fotomilenio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/empleados">Empleados</a>
+                </li>
+                <!-- Puedes añadir más enlaces aquí -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
     <div class="container mt-5">
-        <h1>Bienvenido a la Página de Inicio</h1>
-        <a href="/empleados" class="btn btn-primary">Ver Empleados</a>
+        <div class="jumbotron">
+            <h1 class="display-4">Bienvenido a Fotomilenio</h1>
+            <p class="lead">Esta es la página principal de nuestro sitio web.</p>
+            <hr class="my-4">
+            <p>Consulta la lista de empleados y gestiona los recursos humanos de manera eficiente.</p>
+            <a class="btn btn-primary btn-lg" href="/empleados" role="button">Ver Empleados</a>
+        </div>
     </div>
+
+    <!-- Pie de página -->
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container text-center">
+            <span>&copy; 2024 Fotomilenio. Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

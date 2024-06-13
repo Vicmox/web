@@ -21,21 +21,27 @@ public class EmpleadoService {
         return empleadoRepository.findAll();
     }
 
-    public Empleado getEmpleadoById(Long id) {
-        return empleadoRepository.findById(id).orElse(null);
-    } 
-
     public List<Empleado> saveAllEmpleados(List<Empleado> empleado){
 
         return empleadoRepository.saveAll(empleado);
     }
 
-    public Empleado guardarEmpleado(Empleado empleado) {
+    public Empleado saveEmpleado(Empleado empleado) {
         return empleadoRepository.save(empleado);
     }
 
+    public Empleado updateEmpleado(Long id, Empleado empleado) {
+        Empleado existingEmpleado = empleadoRepository.findById(id).orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+        existingEmpleado.setNombre(empleado.getNombre());
+        existingEmpleado.setEmail(empleado.getEmail());
+        return empleadoRepository.save(existingEmpleado);
+    }
 
     public void deleteEmpleado(Long id) {
         empleadoRepository.deleteById(id);
+    }
+
+    public Empleado getEmpleadoById(Long id) {
+        return empleadoRepository.findById(id).orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
     }
 }

@@ -1,73 +1,290 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <title>Listado de Empleados</title>
-    <link rel="stylesheet" type="text/css" href="/css/listado-empleados.css" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            flex: 1;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #ff0000 !important;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255,255,255,.55);
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ff0000;
+        }
+
+        .container {
+            margin-top: 50px;
+            flex: 1;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #ff0000;
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .btn-eliminar {
+            margin: 0;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .footer span {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Fotomilenio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/empleados">Empleados</a>
+                </li>
+                <!-- Puedes añadir más enlaces aquí -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
     <div class="container">
-      <h2 style="padding: 12px">Listado de Empleados</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Iterar sobre la lista de empleados -->
-          <tr th:each="empleado : ${empleados}">
-            <td th:text="${empleado.nombre}"></td>
-            <td th:text="${empleado.email}"></td>
-            <td class="button-container">
-              <!-- Botón de eliminar con JavaScript -->
-              <button class="btn-eliminar" data-id="${empleado.id}">
-                Eliminar
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Listado de Empleados</h2>
+                <button class="btn btn-success" data-toggle="modal" data-target="#registrarEmpleadoModal">Registrar Empleado</button>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="empleado : ${empleados}">
+                            <td th:text="${empleado.nombre}"></td>
+                            <td th:text="${empleado.email}"></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm btn-editar"
+                                        th:data-id="${empleado.id}"
+                                        th:data-nombre="${empleado.nombre}"
+                                        th:data-email="${empleado.email}"
+                                        data-toggle="modal" data-target="#editarEmpleadoModal">Editar</button>
+                                <button class="btn btn-danger btn-sm btn-eliminar" th:data-id="${empleado.id}">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
+    <!-- Modal Registrar Empleado -->
+    <div class="modal fade" id="registrarEmpleadoModal" tabindex="-1" role="dialog" aria-labelledby="registrarEmpleadoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registrarEmpleadoModalLabel">Registrar Empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formRegistrarEmpleado" action="/empleados" method="post">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Empleado -->
+    <div class="modal fade" id="editarEmpleadoModal" tabindex="-1" role="dialog" aria-labelledby="editarEmpleadoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarEmpleadoModalLabel">Editar Empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarEmpleado" action="/empleados/{id}" method="post">
+                        <input type="hidden" id="editar-id" name="id">
+                        <div class="form-group">
+                            <label for="editar-nombre">Nombre</label>
+                            <input type="text" class="form-control" id="editar-nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editar-email">Email</label>
+                            <input type="email" class="form-control" id="editar-email" name="email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container text-center">
+            <span>&copy; 2024 Fotomilenio. Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Seleccionar todos los botones de eliminar por su clase
-        var btnEliminar = document.querySelectorAll(".btn-eliminar");
+        document.addEventListener("DOMContentLoaded", function () {
+            var btnEliminar = document.querySelectorAll(".btn-eliminar");
+            var btnEditar = document.querySelectorAll(".btn-editar");
 
-        // Iterar sobre cada botón y agregar un listener de evento clic
-        btnEliminar.forEach(function (btn) {
-          btn.addEventListener("click", function (event) {
-            var empleadoId = event.target.getAttribute("data-id"); // Obtener el id del atributo data-id del botón clicado
-            eliminarEmpleado(empleadoId); // Llamar a la función eliminarEmpleado con el id obtenido
-          });
+            btnEliminar.forEach(function (btn) {
+                btn.addEventListener("click", function (event) {
+                    var empleadoId = event.target.getAttribute("data-id");
+                    eliminarEmpleado(empleadoId);
+                });
+            });
+
+            btnEditar.forEach(function (btn) {
+                btn.addEventListener("click", function (event) {
+                    var empleadoId = event.target.getAttribute("data-id");
+                    var empleadoNombre = event.target.getAttribute("data-nombre");
+                    var empleadoEmail = event.target.getAttribute("data-email");
+                    cargarEmpleado(empleadoId, empleadoNombre, empleadoEmail);
+                });
+            });
+
+            document.getElementById("formRegistrarEmpleado").addEventListener("submit", function (event) {
+                event.preventDefault();
+                registrarEmpleado();
+            });
+
+            document.getElementById("formEditarEmpleado").addEventListener("submit", function (event) {
+                event.preventDefault();
+                editarEmpleado();
+            });
         });
-      });
 
-      function eliminarEmpleado(id) {
-        fetch("/empleados/" + id, {
-          method: "DELETE",
-        })
-          .then(function (response) {
-            if (response.ok) {
-              // Eliminación exitosa, actualizar la interfaz (opcional)
-              location.reload(); // Recargar la página para reflejar los cambios
-            } else {
-              console.error("Error al eliminar empleado:", response.statusText);
-            }
-          })
-          .catch(function (error) {
-            console.error("Error al eliminar empleado:", error);
-          });
-      }
+        function eliminarEmpleado(id) {
+            fetch("/empleados/eliminar/" + id, {
+                method: "POST",
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    console.error("Error al eliminar empleado:", response.statusText);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error al eliminar empleado:", error);
+            });
+        }
+
+        function registrarEmpleado() {
+            var form = document.getElementById("formRegistrarEmpleado");
+            var data = new URLSearchParams(new FormData(form)).toString();
+
+            fetch("/empleados", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: data
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    console.error("Error al registrar empleado:", response.statusText);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error al registrar empleado:", error);
+            });
+        }
+
+        function cargarEmpleado(id, nombre, email) {
+            document.getElementById("editar-id").value = id;
+            document.getElementById("editar-nombre").value = nombre;
+            document.getElementById("editar-email").value = email;
+            document.getElementById("formEditarEmpleado").action = "/empleados/" + id;
+        }
+
+        function editarEmpleado() {
+            var form = document.getElementById("formEditarEmpleado");
+            var data = new URLSearchParams(new FormData(form)).toString();
+            var id = document.getElementById("editar-id").value;
+
+            fetch("/empleados/" + id, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: data
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    console.error("Error al editar empleado:", response.statusText);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error al editar empleado:", error);
+            });
+        }
     </script>
-  </body>
+</body>
 </html>

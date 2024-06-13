@@ -4,60 +4,59 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fotomilenio.web.entity.Empleado;
 import com.fotomilenio.web.service.EmpleadoService;
 
-@RestController
+@Controller
 @RequestMapping("/empleados")
 public class EmpeladoRestController {
 
     @Autowired
     private EmpleadoService empleadoService;
 
-    // Listar todos los empleados
     @GetMapping
-    public List<Empleado> listarEmpleados() {
-        return empleadoService.getAllEmpleados();
+    public String listarEmpleados(Model model) {
+        List<Empleado> empleados = empleadoService.getAllEmpleados();
+        model.addAttribute("empleados", empleados);
+        return "listado-empleados";
     }
 
-    // Crear un nuevo empleado
     @PostMapping
-    public Empleado crearEmpleado(@RequestBody Empleado empleado) {
-        return empleadoService.guardarEmpleado(empleado);
+    public String guardarEmpleado(@ModelAttribute Empleado empleado) {
+        empleadoService.saveEmpleado(empleado);
+        return "redirect:/empleados";
     }
 
-    // Actualizar un empleado existente
-    @PutMapping("/{id}")
-    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado empleadoDetalles) {
-        Empleado empleado = empleadoService.getEmpleadoById(id);
-        if (empleado == null) {
-            return ResponseEntity.notFound().build();
-        }
-        empleado.setNombre(empleadoDetalles.getNombre());
-        empleado.setEmail(empleadoDetalles.getEmail());
-        // Actualiza otros campos según sea necesario
-
-        Empleado empleadoActualizado = empleadoService.guardarEmpleado(empleado);
-        return ResponseEntity.ok(empleadoActualizado);
+    @PostMapping("/{id}")
+    public String actualizarEmpleado(@PathVariable Long id, @ModelAttribute Empleado empleado) {
+        empleadoService.updateEmpleado(id, empleado);
+        return "redirect:/empleados";
     }
 
-    // Eliminar un empleado
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarEmpleado(@PathVariable Long id) {
-        Empleado empleado = empleadoService.getEmpleadoById(id);
-        if (empleado == null) {
-            return ResponseEntity.notFound().build();
-        }
+    @PostMapping("/eliminar/{id}")
+    public String eliminarEmpleado(@PathVariable Long id) {
         empleadoService.deleteEmpleado(id);
-        return ResponseEntity.noContent().build();
+        return "redirect:/empleados";
     }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Empleado obtenerEmpleadoPorId(@PathVariable Long id) {
+        return empleadoService.getEmpleadoById(id);
+    }
+
+ 
 }
